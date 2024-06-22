@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do List</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .styled-button {
+            margin: 5px;
+        }
+        .styled-input {
+            margin: 5px;
+        }
+        .styled-label {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="containerTask">
+        <div class="task-name">
+            <input type="text" id="nametask" placeholder="Name Of Task">
+        </div>
+        <div class="task-input">
+            <div id="task-content" contenteditable="true" style="min-height: 200px; border: 1px solid #ccc; padding: 5px;"></div>
+        </div>
+
+        <div class="options">
+            <div class="option-item">
+                <button id="add-checker" class="styled-button">Add Checkbox</button>
+            </div>
+            <div class="option-item">
+                <label class="styled-label">Image</label>
+                <input type="file" id="image-upload" class="styled-input">
+            </div>
+            <div class="option-item">
+                <label class="styled-label">Date</label>
+                <input type="date" id="due-date" class="styled-input">
+            </div>
+            <div class="option-item">
+                <label class="styled-label">Time</label>
+                <input type="time" id="reminder-time" class="styled-input">
+            </div>
+
+            <button id="add-task" class="styled-button">Save</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDs0JUJCnP85lFE2kRYH90GE6ugMxMo0Bs",
+            authDomain: "fire9db-db142.firebaseapp.com",
+            databaseURL: "https://fire9db-db142-default-rtdb.firebaseio.com",
+            projectId: "fire9db-db142",
+            storageBucket: "fire9db-db142.appspot.com",
+            messagingSenderId: "595879751707",
+            appId: "1:595879751707:web:e9e67b6c93aea366e5c8be"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const storage = getStorage(app);
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const taskContent = document.getElementById('task-content');
+            const taskInput = document.createElement('textarea');
+            taskContent.appendChild(taskInput);
+            let uploadedImageURL = '';
+
+            function handleOptionClick(optionType, value) {
+                switch (optionType) {
+                    case 'checker':
+                        taskInput.value += '☐ ';
+                        break;
+                    case 'image':
+                        const img = document.createElement('img');
+                        img.src = value;
+                        img.style.maxWidth = '10%';
+                        img.style.display = 'block';  
+                        taskContent.appendChild(img);
+                        break;
+                    case 'due-date':
+                        taskInput.value += `Date: ${value} `;
+                        break;
+                    case 'reminder':
+                        taskInput.value += `Time: ${value} `;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            document.getElementById('add-checker').addEventListener('click', function () {
+                handleOptionClick('checker');
+            });
+
+            document.getElementById('image-upload').addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const storageReference = storageRef(storage, 'images/' + file.name);
+                    uploadBytes(storageReference, file).then((snapshot) => {
+                        getDownloadURL(snapshot.ref).then((downloadURL) => {
+                            uploadedImageURL = downloadURL;
+                            handleOptionClick('image', uploadedImageURL);
+                        });
+                    }).catch(error => {
+                        console.error('Error uploading image:', error);
+                    });
+                }
+            });
+
+            document.getElementById('due-date').addEventListener('change', function () {
+                handleOptionClick('due-date', this.value);
+            });
+
+            document.getElementById('reminder-time').addEventListener('change', function () {
+                handleOptionClick('reminder', this.value);
+            });
+
+            function addTaskToFirebase(task) {
+                const tasksRef = ref(database, 'tasks');
+                return push(tasksRef, task); // Return the promise from push
+            }
+
+            document.getElementById('add-task').addEventListener('click', function () {
+                const taskName = document.getElementById('nametask').value.trim();
+                const taskContent = taskInput.value.trim();
+
+                const task = {
+                    name: taskName,
+                    content: taskContent,
+                    imageURL: uploadedImageURL,
+                    timestamp: serverTimestamp()
+                };
+
+                addTaskToFirebase(task).then(() => {
+                    console.log('Task added successfully');
+                    // Redirect to home.html after adding task
+                    window.location.href = 'home.html';
+                }).catch(error => {
+                    console.error('Error adding task:', error);
+                });
+
+                // Clear inputs and reset state
+                document.getElementById('nametask').value = '';
+                taskInput.value = '';
+                uploadedImageURL = '';
+
+                const displayedImage = taskContent.querySelector('img');
+                if (displayedImage) {
+                    displayedImage.remove();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

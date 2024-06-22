@@ -1,0 +1,218 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    background-image: url('background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.containerTask {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    
+}
+
+.signup {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+}
+
+.input-group{
+    margin-bottom: 15px;
+}
+
+.inputIndex{
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    width: 100%; /* Make input boxes expand to full width of their container */
+    padding: 10px; /* Adjust padding as needed */
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    
+}
+
+p {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+h1{
+    font-size: 24px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10000px;
+    background-color: #483d8b;
+    color: #fff;
+}
+
+label{
+    display: block;
+    margin-bottom: 10px;
+    color: rgb(109, 70, 18);
+}
+
+h1, p {
+    text-align: center;
+}
+
+.btn{
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #FD9B63;
+    width: 100%; /* Make input boxes expand to full width of their container */
+    padding: 10px; /* Adjust padding as needed */
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    
+}
+
+.task-name input,
+.task-input textarea {
+    width: 100%;
+    padding: 15px;
+    margin: 0;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.task-input textarea {
+    resize: none;
+    height: 150px;
+}
+
+.options {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option-item {
+    background-color: #b2ebf2;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.option-item label {
+    font-size: 16px;
+    color: #00796b;
+}
+
+button{
+    cursor: pointer;
+}
+.styled-button {
+    background-color: #ff4081;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.styled-button:hover {
+    background-color: #e91e63;
+}
+
+.styled-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.styled-input {
+    display: block;
+    margin: 0 auto;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#Insbtn {
+    background-color: #ffab40;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20%;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+#Insbtn:hover {
+    background-color: #ff9100;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    background-color: #f5deb3;
+}
+.task-item:hover {
+    background-color: #f0f0f0;
+}
+.task-actions {
+    display: flex;
+    gap: 10px;
+}
+.task-actions button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #555;
+    display: flex; /* Ensure button content aligns properly */
+    align-items: center; /* Center icon vertically */
+}
+.task-actions button:hover {
+    color: #f44336;
+}
+.task-actions button .icon {
+    margin-right: 5px;
+}
+.add-task-button {
+    text-decoration: none;
+    font-size: 24px; /* Adjust size as needed */
+    color: #333;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #dda0dd;
+    transition:  0.3s ease, color 0.3s ease,  0.2s ease;
+}
+.add-task-button:hover {
+    color: #fff;
+    background-color: #8a2be2;
+    transform: scale(1.1);
+}
